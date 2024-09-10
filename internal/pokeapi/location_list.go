@@ -1,0 +1,43 @@
+package pokeapi
+
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+)
+
+func (c *Client) ListLocations(pageURL *string) (PokeLocations, error){
+	fmt.Println("Ok need to fetch locations")
+	locationUrl := baseURL + "/location-area"
+	if pageURL != nil {
+		locationUrl = *pageURL
+	}
+	
+	res, err := http.Get(locationUrl)
+	if err != nil {
+		return PokeLocations{}, fmt.Errorf("error with map get request: %w", err)
+	}
+	body, err := io.ReadAll(res.Body)
+	defer res.Body.Close()
+
+	if res.StatusCode > 299 {
+		return PokeLocations{}, fmt.Errorf("error with status code: %d", res.StatusCode)
+	}
+
+	if err != nil {
+		return PokeLocations{}, fmt.Errorf("something went wrong reading everything: %w", err)
+	}
+
+	data := []byte(body)
+
+	locationList := PokeLocations{}
+	err = json.Unmarshal(data, &locationList)
+	if err != nil {
+		return PokeLocations{}, fmt.Errorf("error mapping: %w", err)
+	}
+
+	return locationList, nil
+
+	
+}
