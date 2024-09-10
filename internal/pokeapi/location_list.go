@@ -13,6 +13,15 @@ func (c *Client) ListLocations(pageURL *string) (PokeLocations, error){
 	if pageURL != nil {
 		locationUrl = *pageURL
 	}
+
+	if data, found := c.cache.Get(locationUrl); found {
+		locationList := PokeLocations{}
+		err := json.Unmarshal(data, &locationList)
+		if err != nil {
+			return PokeLocations{}, fmt.Errorf("error unmarshalling data")
+		}
+		return locationList, nil
+	}
 	
 	res, err := http.Get(locationUrl)
 	if err != nil {
@@ -36,7 +45,7 @@ func (c *Client) ListLocations(pageURL *string) (PokeLocations, error){
 	if err != nil {
 		return PokeLocations{}, fmt.Errorf("error mapping: %w", err)
 	}
-
+	c.cache.Add(locationUrl, data)
 	return locationList, nil
 
 	
