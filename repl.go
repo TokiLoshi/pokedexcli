@@ -53,7 +53,7 @@ func startRepl(cfg *config) {
 			continue
 	} else {
 		fmt.Println("I'm not sure what you mean... we seem to have a misunderstanding")
-		fmt.Println("Your options are:\n -help\n -exit\n -mapf\n -mapb\n -explore")
+		fmt.Println("Your options are:\n -help\n -exit\n -mapf\n -mapb\n -explore <location-name>\n -catch <pokemon-name>")
 		continue
 	}
 }
@@ -91,6 +91,11 @@ func getCommands() map[string] cliCommand{
 			name: "explore <location_name>",
 			description: "Finds Pokemon in the area",
 			callback: commandExplore,
+		},
+		"catch": {
+			name: "catch <pokemon_name>",
+			description: "Tries to catch a pokemon",
+			callback: commandCatch,
 		},
 	}
 }
