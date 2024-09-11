@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func commandMapf(cfg *config) error {
+func commandMapf(cfg *config, args ...string) error {
 	fmt.Println("getting 20 locations")
 	locales, err := cfg.pokeapiClient.ListLocations(cfg.nextLocationsURL)
 	if err != nil {
@@ -23,7 +23,7 @@ func commandMapf(cfg *config) error {
 
 }
 
-func commandMapb(cfg *config) error {
+func commandMapb(cfg *config, args ...string) error {
 
 	fmt.Println("going back 20 locations")
 
