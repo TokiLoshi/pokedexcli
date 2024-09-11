@@ -10,7 +10,6 @@ func commandCatch(cfg *config, args ...string) error {
 		return fmt.Errorf("please choose a pokemon")
 	}
 	pokemon := args[0]
-	fmt.Printf("let's try catch: %v\n", pokemon)
 
 	pokemonCatch, err := cfg.pokeapiClient.CatchPokemon(pokemon)
 	if err != nil {
@@ -18,7 +17,6 @@ func commandCatch(cfg *config, args ...string) error {
 	}
 
 	experience := pokemonCatch.BaseExperience
-	fmt.Println(experience)
 
 	randomNumber := rand.Intn(10) * experience / 10
 

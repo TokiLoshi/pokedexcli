@@ -10,7 +10,6 @@ import (
 func (c *Client) CatchPokemon(pokemonName string) (Pokemon, error) {
 	name := pokemonName
 	pokemonURL := baseURL + "/pokemon/" + name
-	fmt.Printf("Trying to catch: %v at %v\n", name, pokemonURL)
 
 	if data, found := c.cache.Get(name); found {
 		pokemonResponse := Pokemon{}

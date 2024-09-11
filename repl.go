@@ -54,7 +54,7 @@ func startRepl(cfg *config) {
 			continue
 	} else {
 		fmt.Println("I'm not sure what you mean... we seem to have a misunderstanding")
-		fmt.Println("Your options are:\n -help\n -exit\n -mapf\n -mapb\n -explore <location-name>\n -catch <pokemon-name>")
+		fmt.Println("Your options are:\n -help\n -exit\n -mapf\n -mapb\n -explore <location-name>\n -catch <pokemon-name>\n -inspect <pokemon-name>")
 		continue
 	}
 }
@@ -68,15 +68,25 @@ func cleanInput(text string) []string {
 
 func getCommands() map[string] cliCommand{
 	return map[string]cliCommand {
-		"help": {
-			name:        "help",
-			description: "Displays a help message",
-			callback:    commandHelp,
+		"catch": {
+			name: "catch <pokemon_name>",
+			description: "Tries to catch a pokemon",
+			callback: commandCatch,
 		},
 		"exit": {
 			name:        "exit",
 			description: "Exit the Pokedex",
 			callback:    commandExit,
+		},
+		"help": {
+			name:        "help",
+			description: "Displays a help message",
+			callback:    commandHelp,
+		},
+		"inspect": {
+			name: "inspect",
+			description: "Inspects a caught pokemon",
+			callback: commandInspect,
 		},
 		"mapf": {
 			name: "map",
@@ -93,10 +103,6 @@ func getCommands() map[string] cliCommand{
 			description: "Finds Pokemon in the area",
 			callback: commandExplore,
 		},
-		"catch": {
-			name: "catch <pokemon_name>",
-			description: "Tries to catch a pokemon",
-			callback: commandCatch,
-		},
+		
 	}
 }
