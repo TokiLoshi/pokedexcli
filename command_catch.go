@@ -17,21 +17,21 @@ func commandCatch(cfg *config, args ...string) error {
 		return fmt.Errorf("issue accessing api: %w", err)
 	}
 
-experience := pokemonCatch.BaseExperience
-fmt.Println(experience)
+	experience := pokemonCatch.BaseExperience
+	fmt.Println(experience)
 
-randomNumber := rand.Intn(10) * experience / 10
+	randomNumber := rand.Intn(10) * experience / 10
 
-userGeneratedNumber := rand.Intn(100)
-
-fmt.Printf("Pokemon rolled a: %v and user rolled a: %v\n", randomNumber, userGeneratedNumber)
-if randomNumber > userGeneratedNumber {
-	fmt.Printf("%v escaped!\n", pokemon)
-} else {
-	fmt.Printf("congratulations you caught: %v\n", pokemon)
-}
-
+	userGeneratedNumber := rand.Intn(100)
 	
+	// Evaluate if user caught the pokemon
+	if randomNumber > userGeneratedNumber {
+		fmt.Printf("%v escaped!\n", pokemonCatch.Name)
+	} else {
+		fmt.Printf("congratulations you caught: %v\n", pokemonCatch.Name)
+	}
+
+	cfg.caughtPokemon[pokemonCatch.Name] = pokemonCatch
 
 	return nil
 }

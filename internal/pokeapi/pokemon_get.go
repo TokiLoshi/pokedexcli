@@ -44,5 +44,7 @@ func (c *Client) CatchPokemon(pokemonName string) (Pokemon, error) {
 		return Pokemon{}, fmt.Errorf("error unmarshalling pokemon: %w", err)
 	}
 
+	c.cache.Add(pokemonURL, data)
+
 	return pokemonCatch, nil
 }
