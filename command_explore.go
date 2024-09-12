@@ -34,11 +34,13 @@ func commandExplore(cfg *config, args ...string) error {
 	}
 	
 	amount := strconv.Itoa(len(location.PokemonEncounters))
-
-	findings, err := ascii.RenderTextOptions(amount + " found", "green", "green")
-	if err != nil {
-		return fmt.Errorf("error rendering ascii art: %w", err)
-	}
-	fmt.Println(findings)
+	fmt.Println("=========================================")
+	fmt.Printf("              Found %v Pokemon          \n", amount)
+	fmt.Println("=========================================")
+	// findings, err := ascii.RenderTextOptions(amount + " found", "green", "green")
+	// if err != nil {
+	// 	return fmt.Errorf("error rendering ascii art: %w", err)
+	// }
+	// fmt.Println(findings)
 	return nil
 }

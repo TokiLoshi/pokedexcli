@@ -44,6 +44,7 @@ func commandCatch(cfg *config, args ...string) error {
 		}
 		// fmt.Printf("%v escaped!\n", pokemonCatch.Name)
 		fmt.Println(sad)
+		return nil
 	} else {
 		happy, err := ascii.RenderTextOptions(pokemonCatch.Name + " caught!", "green", "green")
 		if err != nil {
@@ -51,9 +52,8 @@ func commandCatch(cfg *config, args ...string) error {
 		}
 		fmt.Println(happy)
 		fmt.Printf("You may now inspect %v with the inspect command\n", pokemonCatch.Name)
+		
 	}
-
 	cfg.caughtPokemon[pokemonCatch.Name] = pokemonCatch
-
 	return nil
 }
