@@ -1,6 +1,6 @@
 # Boot.dev Pokedex project
 
-!()[project instructions image]
+![project instructions image](https://github.com/TokiLoshi/pokedexcli/blob/main/pokedex.png)
 
 ## About the project
 
