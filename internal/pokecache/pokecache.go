@@ -1,7 +1,6 @@
 package pokecache
 
 import (
-	"fmt"
 	"sync"
 	"time"
 )
@@ -19,7 +18,6 @@ type cacheEntry struct {
 
 
 func NewCache(interval time.Duration) Cache {
-	fmt.Println("Creating a new cache", interval)
 	c := Cache{
 		cache: make(map[string]cacheEntry),
 		mux: &sync.RWMutex{},
@@ -50,9 +48,6 @@ func (c *Cache)reapLoop(interval time.Duration) {
 	for range ticker.C {
 		c.reap(time.Now().UTC(), interval)
 	}
-	fmt.Println("Cleaning up in ReapLoop")
-	
-
 }
 
 func (c *Cache) reap(now time.Time, last time.Duration) {

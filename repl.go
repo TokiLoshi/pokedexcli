@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/TokiLoshi/pokedexcli/internal/ascii"
 	"github.com/TokiLoshi/pokedexcli/internal/pokeapi"
 )
 
@@ -25,8 +26,32 @@ type cliCommand struct {
 
 func startRepl(cfg *config) {
 	reader := bufio.NewScanner(os.Stdin)
-	fmt.Println("Pokedex Comand Line Center")
-	fmt.Println("******************")
+
+	asciiArt, err := ascii.RenderTextOptions("Pokedex", "yellow", "red")
+	if err != nil {
+		fmt.Println("error loading ascii text: %w", err)
+	}
+
+	fmt.Println(asciiArt)
+	fmt.Println("=========================================")
+	fmt.Println("              Instructions:              ")
+	fmt.Println("=========================================")
+	fmt.Println("")	
+	fmt.Println("1. Move through the map 20 locations at a time with -'mapf'")
+	fmt.Println("")
+	fmt.Println("2. Move back through the map with -'mapb'")
+	fmt.Println("")
+	fmt.Println("3. Explore an area with -'explore <area_name>'")
+	fmt.Println("")
+	fmt.Println("4. If you find pokemon try catch one with -'catch <pokemon_name>'")
+	fmt.Println("")
+	fmt.Println("5. If you are successful you can inspect them -'inspect <pokemon_name>'")
+	fmt.Println("")
+	fmt.Println("6. Admire your pokedex -'pokedex'")
+	fmt.Println("")
+	fmt.Println("View the menu at any time with -'help'")
+	fmt.Println("")
+	fmt.Println("=========================================")
 
 
 	for {
@@ -53,8 +78,11 @@ func startRepl(cfg *config) {
 			}
 			continue
 	} else {
-		fmt.Println("I'm not sure what you mean... we seem to have a misunderstanding")
-		fmt.Println("Your options are:\n -help\n -exit\n -mapf\n -mapb\n -explore <location-name>\n -catch <pokemon-name>\n -inspect <pokemon-name>\n -pokedex")
+		fmt.Println("=========================================")
+		fmt.Println("Your options are:")
+		fmt.Println("=========================================")
+		fmt.Println(" - help\n - exit\n - mapf\n - mapb\n - explore <location-name>\n - catch <pokemon-name>\n - inspect <pokemon-name>\n - pokedex")
+		fmt.Println("=========================================")
 		continue
 	}
 }
@@ -94,13 +122,13 @@ func getCommands() map[string] cliCommand{
 			callback: commandInspect,
 		},
 		"mapf": {
-			name: "map",
-			description: "Displays names of 20 location areas in Pokemon world",
+			name: "mapf",
+			description: "Displays the next 20 location areas in Pokemon world",
 			callback: commandMapf,
 		},
 		"mapb": {
 			name: "mapb",
-			description: "Takes you back a command",
+			description: "Displays the previous 20 location areas in the Pokemon world",
 			callback: commandMapb,
 		},
 		"pokedex": {

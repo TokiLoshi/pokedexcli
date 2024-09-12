@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/TokiLoshi/pokedexcli/internal/ascii"
 )
 
 func commandInspect(cfg *config, args ...string) error {
@@ -10,19 +12,26 @@ func commandInspect(cfg *config, args ...string) error {
 	}
 	pokemon := args[0]
 	
-	// Check what data the user in the caucht pokemon 
+	
 	pokedex := cfg.caughtPokemon
 	_, ok := pokedex[pokemon];
 	if !ok {
-		return fmt.Errorf("you have not caught %s", pokemon)
+		return fmt.Errorf("***** you have not caught %s ******", pokemon)
+	}
+
+	decoratedCommand, err := ascii.RenderTextOptions(pokemon, "red", "magenta")
+	if err != nil {
+		return fmt.Errorf("error generating ascii art: %w", err)
 	}
 	
+	fmt.Println(decoratedCommand)
+	fmt.Println("=========================================")
 	name := pokedex[pokemon].Name
 	height := pokedex[pokemon].Height
 	weight := pokedex[pokemon].Weight
 	stats := pokedex[pokemon].Stats
 	allTypes := pokedex[pokemon].Types
-
+	
 	fmt.Printf("Name: %s\n", name)
 	fmt.Printf("Height: %d\n", height)
 	fmt.Printf("Weight: %d\n", weight)
@@ -36,7 +45,7 @@ func commandInspect(cfg *config, args ...string) error {
 		fmt.Printf("  -%v\n", poketype.Type.Name)
 	}
 
-	
+	fmt.Println("=========================================")
 	
 	return nil
 }

@@ -8,7 +8,7 @@ import (
 )
 
 func (c *Client) ListLocations(pageURL *string) (PokeLocations, error){
-	fmt.Println("Ok need to fetch locations")
+	
 	locationUrl := baseURL + "/location-area"
 	if pageURL != nil {
 		locationUrl = *pageURL

@@ -8,13 +8,9 @@ import (
 )
 
 func (c *Client) GetLocation(locationName string) (Location, error) {
- fmt.Println("Lets see what pokemon are around")
  areaURL := baseURL + "/location-area/" + locationName
 
-
-// Need to add this to the cache later
-//  pokemon := PokemonEncounters{}
-//  // Logic to add to the cache later: 
+// Adds pokemon to cache 
  if data, found := c.cache.Get(areaURL); found {
 	locationResponse := Location{}
 	err := json.Unmarshal(data, &locationResponse)
@@ -24,14 +20,11 @@ func (c *Client) GetLocation(locationName string) (Location, error) {
 	return locationResponse, nil
  }
 
-
-
  req, err := http.Get(areaURL) 
  if err != nil {
 	return Location{}, fmt.Errorf("error getting request: %w", err)
  }
  
-
  if req.StatusCode > 299 {
 	return Location{}, fmt.Errorf("status code error %w", err)
  }

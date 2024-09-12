@@ -2,16 +2,22 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/TokiLoshi/pokedexcli/internal/ascii"
 )
 
 func commandMapf(cfg *config, args ...string) error {
-	fmt.Println("getting 20 locations")
+	decoratedCommand, err := ascii.RenderTextOptions("forward", "magenta", "magenta")
+	if err != nil {
+		return fmt.Errorf("error generating ascii art")
+	}
+	fmt.Println(decoratedCommand)
+
 	locales, err := cfg.pokeapiClient.ListLocations(cfg.nextLocationsURL)
 	if err != nil {
 		return fmt.Errorf("error with locations: %w", err)
 	}
 	
-	// Update last location 
 	cfg.nextLocationsURL = locales.Next
 	cfg.previousLocationsURL = locales.Previous
 
@@ -25,7 +31,11 @@ func commandMapf(cfg *config, args ...string) error {
 
 func commandMapb(cfg *config, args ...string) error {
 
-	fmt.Println("going back 20 locations")
+	decoratedCommand, err := ascii.RenderTextOptions("back", "cyan", "cyan")
+	if err != nil {
+		return fmt.Errorf("error generating ascii art")
+	}
+	fmt.Println(decoratedCommand)
 
 	locales, err := cfg.pokeapiClient.ListLocations(cfg.previousLocationsURL)
 	if err != nil {
@@ -38,7 +48,6 @@ func commandMapb(cfg *config, args ...string) error {
 	for _, location := range locales.Results {
 		fmt.Println(location.Name)
 	}
-	
 
 	return nil
 }

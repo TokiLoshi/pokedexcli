@@ -26,7 +26,7 @@ func (c *Client) CatchPokemon(pokemonName string) (Pokemon, error) {
 	}
 
 	if req.StatusCode > 299 {
-		return Pokemon{}, fmt.Errorf("status cod error %d", req.StatusCode)
+		return Pokemon{}, fmt.Errorf("status code error %d", req.StatusCode)
 	}
 
 	data, err := io.ReadAll(req.Body)
